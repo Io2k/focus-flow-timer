@@ -389,37 +389,61 @@ function TaskRow({
   return (
     <li className="rounded-2xl border border-white/10 bg-white/5 p-3.5 shadow backdrop-blur">
       <div className="flex items-start gap-3">
-        {!task.done && (
+        {/* Left controls: "Focus" (add to a focus session) and "Done" (mark
+            complete) are separate, labeled pills with a divider between them
+            so they can't be mistaken for each other. */}
+        <div className="flex shrink-0 items-start gap-2.5">
+          {!task.done && (
+            <button
+              type="button"
+              onClick={() => onSelectToggle(task.id)}
+              aria-label={
+                selected ? 'Remove from focus selection' : 'Select for focus session'
+              }
+              title={
+                selected ? 'Remove from focus selection' : 'Select for focus session'
+              }
+              className={`mt-0.5 flex items-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-medium transition ${
+                selected
+                  ? 'border-indigo-500 bg-indigo-600 text-white'
+                  : 'border-slate-600 text-slate-400 hover:border-indigo-400 hover:text-indigo-300'
+              }`}
+            >
+              <span
+                className={`flex h-3.5 w-3.5 items-center justify-center rounded border text-[10px] leading-none ${
+                  selected ? 'border-white/70 text-white' : 'border-current text-transparent'
+                }`}
+              >
+                ✓
+              </span>
+              Focus
+            </button>
+          )}
+          {!task.done && (
+            <span aria-hidden="true" className="mt-0.5 h-7 w-px shrink-0 bg-white/15" />
+          )}
           <button
             type="button"
-            onClick={() => onSelectToggle(task.id)}
-            aria-label={
-              selected ? 'Remove from focus selection' : 'Select for focus session'
-            }
-            title={
-              selected ? 'Remove from focus selection' : 'Select for focus session'
-            }
-            className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs transition ${
-              selected
-                ? 'border-indigo-500 bg-indigo-600 text-white'
-                : 'border-slate-600 text-transparent hover:border-indigo-400'
+            onClick={() => void onToggle(task)}
+            aria-label={task.done ? 'Mark as not done' : 'Mark as done'}
+            className={`mt-0.5 flex items-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-medium transition ${
+              task.done
+                ? 'border-emerald-500 bg-emerald-500/20 text-emerald-300'
+                : 'border-slate-600 text-slate-400 hover:border-emerald-400 hover:text-emerald-300'
             }`}
           >
-            ✓
+            <span
+              className={`flex h-4 w-4 items-center justify-center rounded-full border text-[10px] leading-none ${
+                task.done
+                  ? 'border-emerald-400 bg-emerald-500 text-white'
+                  : 'border-current text-transparent'
+              }`}
+            >
+              ✓
+            </span>
+            Done
           </button>
-        )}
-        <button
-          type="button"
-          onClick={() => void onToggle(task)}
-          aria-label={task.done ? 'Mark as not done' : 'Mark as done'}
-          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-sm transition ${
-            task.done
-              ? 'border-emerald-500 bg-emerald-500 text-white'
-              : 'border-slate-500 text-transparent hover:border-indigo-400 hover:text-indigo-300'
-          }`}
-        >
-          ✓
-        </button>
+        </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <span
