@@ -176,7 +176,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen overflow-x-hidden bg-slate-950">
       {!supabaseConfigured && (
         <div className="border-b border-amber-500/40 bg-amber-500/10 px-4 py-3 text-center text-sm text-amber-300">
           Supabase isn&apos;t configured yet. Add{' '}

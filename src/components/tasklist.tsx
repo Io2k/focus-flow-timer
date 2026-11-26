@@ -304,7 +304,7 @@ export default function TaskList({
 
       {/* Completed — one section at the very bottom */}
       <section>
-        <div className="mb-2 flex items-center justify-between">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-400">
             Completed {completed.length > 0 ? `(${completed.length})` : ''}
           </h2>
@@ -388,11 +388,14 @@ function TaskRow({
 }) {
   return (
     <li className="rounded-2xl border border-white/10 bg-white/5 p-3.5 shadow backdrop-blur">
-      <div className="flex items-start gap-3">
+      {/* Stacked on phones — title first, then the Focus/Done pills, then
+          the actions — so nothing squeezes off the right edge. The
+          three-column row returns at the sm breakpoint and up. */}
+      <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:gap-3">
         {/* Left controls: "Focus" (add to a focus session) and "Done" (mark
             complete) are separate, labeled pills with a divider between them
             so they can't be mistaken for each other. */}
-        <div className="flex shrink-0 items-start gap-2.5">
+        <div className="order-2 flex shrink-0 items-center gap-2.5 sm:order-1 sm:items-start">
           {!task.done && (
             <button
               type="button"
@@ -444,7 +447,7 @@ function TaskRow({
             Done
           </button>
         </div>
-        <div className="min-w-0 flex-1">
+        <div className="order-1 min-w-0 flex-1 sm:order-2">
           <div className="flex flex-wrap items-center gap-2">
             <span
               className={`text-sm font-medium ${task.done ? 'text-slate-500 line-through' : 'text-slate-100'}`}
@@ -471,7 +474,7 @@ function TaskRow({
             </p>
           )}
         </div>
-        <div className="flex shrink-0 flex-col items-end gap-1.5 sm:flex-row sm:items-center">
+        <div className="order-3 flex shrink-0 flex-row flex-wrap items-center gap-1.5 sm:flex-nowrap sm:items-center">
           {!task.done && (
             <button
               type="button"
